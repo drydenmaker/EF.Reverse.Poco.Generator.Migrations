@@ -35,7 +35,7 @@ namespace aPocoModel.Generated
         
         static LagaModelDbContext()
         {
-            System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer<LagaModelDbContext>());
+            System.Data.Entity.Database.SetInitializer(new PocoLagaUpgradeInitializer<LagaModelDbContext>());
         }
 
         public LagaModelDbContext()

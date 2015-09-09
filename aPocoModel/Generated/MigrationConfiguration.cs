@@ -26,9 +26,9 @@ using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
-    public class dummy : DbMigrationsConfiguration<LagaModelDbContext>
+    public class MigrationConfiguration : DbMigrationsConfiguration<LagaModelDbContext>
     {
-        public dummy()
+        public MigrationConfiguration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;

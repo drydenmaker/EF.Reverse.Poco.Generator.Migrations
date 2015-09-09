@@ -13,14 +13,15 @@ namespace aPocoModelTestProject
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
         }
         [TestMethod]
-        public void TestMethod1()
+        public void TestPocoMethod()
         {
-            //System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer());
+            (new LagaModelDbContext()).Dispose();
+            System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer<LagaModelDbContext>());
 
             using (var context = new LagaModelDbContext())
             {
                 var threadList = context.LoggerThreads.ToList();
-                Assert.AreEqual(threadList.Count, 1);
+                Assert.AreEqual(1, threadList.Count);
             }
             
         }

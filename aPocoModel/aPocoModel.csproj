@@ -50,9 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\dummy.cs">
-      <DependentUpon>LogaDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\FakeDbSet.cs">
       <DependentUpon>LogaDatabase.tt</DependentUpon>
     </Compile>
@@ -94,7 +91,15 @@
     <Compile Include="Generated\LoggerThreadStatusConfiguration.cs">
       <DependentUpon>LogaDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Generated\MigrationConfiguration.cs">
+      <DependentUpon>LogaDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\PocoLagaInitializer.cs" />
+    <Compile Include="Generated\PocoLagaUpgradeInitializer.cs" />
+    <Compile Include="Migrations\201509092112539_InitialCreate.cs" />
+    <Compile Include="Migrations\201509092112539_InitialCreate.Designer.cs">
+      <DependentUpon>201509092112539_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +116,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201509092112539_InitialCreate.resx">
+      <DependentUpon>201509092112539_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

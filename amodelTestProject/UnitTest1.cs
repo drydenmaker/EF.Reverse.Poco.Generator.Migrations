@@ -13,7 +13,7 @@ namespace amodelTestProject
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
         }
         [TestMethod]
-        public void TestMethod1()
+        public void TestEf6DesignerMethod()
         {
             System.Data.Entity.Database.SetInitializer(new LagaInitializer());
 

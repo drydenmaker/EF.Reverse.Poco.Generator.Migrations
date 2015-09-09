@@ -10,10 +10,10 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "aPocoModel\App.config"
 //     Connection String Name: "LagaModel"
-//     Connection String:      "Data Source=(local);Initial Catalog=Logging;Integrated Security=True;MultipleActiveResultSets=True"
+//     Connection String:      "Server=NAVDBTEST\DEV;Database=Logging;Integrated Security=SSPI"
 // </auto-generated>
 // ------------------------------------------------------------------------------------------------
-// Database Edition       : Developer Edition (64-bit)
+// Database Edition       : Enterprise Edition (64-bit)
 // Database Engine Edition: Enterprise
 
 
