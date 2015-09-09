@@ -15,7 +15,7 @@ namespace aPocoModelTestProject
         [TestMethod]
         public void TestMethod1()
         {
-            System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer());
+            //System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer());
 
             using (var context = new LagaModelDbContext())
             {

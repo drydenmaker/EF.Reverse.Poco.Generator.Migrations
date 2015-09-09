@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\dummy.cs">
+      <DependentUpon>LogaDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\FakeDbSet.cs">
       <DependentUpon>LogaDatabase.tt</DependentUpon>
     </Compile>

@@ -26,25 +26,30 @@ using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
-    // logger_entries
-    public class LoggerEntry
+    public class PocoLagaConfig : DbMigrationsConfiguration<LagaModelDbContext>
     {
-        public int Id { get; set; } // id (Primary key)
-        public int LoggerOperationId { get; set; } // logger_operation_id
-        public int? EventId { get; set; } // event_id
-        public int? Priority { get; set; } // priority
-        public string Severity { get; set; } // severity
-        public string Title { get; set; } // title
-        public string Message { get; set; } // message
-        public DateTime Timestamp { get; set; } // timestamp
-        public string MachineName { get; set; } // machine_name
-        public string ProcessId { get; set; } // process_id
-        public string ProcessName { get; set; } // process_name
-        public string ThreadName { get; set; } // thread_name
-        public string Win32Thread { get; set; } // win32_thread
+        public PocoLagaConfig()
+        {
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+        }
 
-        // Foreign keys
-        public virtual LoggerOperation LoggerOperation { get; set; } // FK_dbo.logger_entries_dbo.logger_operations_logger_operation_id
+        //protected override void Seed(LagaModelDbContext context)
+        //{
+           
+            // This method will be called after migrating to the latest version.
+
+            // You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            // to avoid creating duplicate seed data. E.g.
+            //
+            //   context.People.AddOrUpdate(
+            //     p => p.FullName,
+            //     new Person { FullName = "Andrew Peters" },
+            //     new Person { FullName = "Brice Lambson" },
+            //     new Person { FullName = "Rowan Miller" }
+            //   );
+            //
+        //}
     }
 
 }

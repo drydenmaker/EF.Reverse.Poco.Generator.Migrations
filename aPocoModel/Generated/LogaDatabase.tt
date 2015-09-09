@@ -31,8 +31,8 @@
     };
 
     // Migrations *************************************************************************************************************************
-    MigrationConfigurationFileName = ""; // null or empty to not create migrations
-    MigrationStrategy = "MigrateDatabaseToLatestVersion"; // MigrateDatabaseToLatestVersion, CreateDatabaseIfNotExists or DropCreateDatabaseIfModelChanges
+    MigrationConfigurationFileName = "dummy"; // null or empty to not create migrations
+    MigrationStrategy = "PocoLagaInitializer"; // MigrateDatabaseToLatestVersion, CreateDatabaseIfNotExists or DropCreateDatabaseIfModelChanges
     AutomaticMigrationsEnabled = true;
     AutomaticMigrationDataLossAllowed = true; // if true, can drop fields and lose data during automatic migration
 

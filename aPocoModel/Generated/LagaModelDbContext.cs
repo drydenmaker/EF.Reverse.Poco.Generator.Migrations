@@ -22,6 +22,7 @@ using System.Data.SqlTypes;
 using System.Data.Entity.ModelConfiguration;
 using System.Threading;
 using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption;
+using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
@@ -34,7 +35,7 @@ namespace aPocoModel.Generated
         
         static LagaModelDbContext()
         {
-            System.Data.Entity.Database.SetInitializer<LagaModelDbContext>(null);
+            System.Data.Entity.Database.SetInitializer(new PocoLagaInitializer<LagaModelDbContext>());
         }
 
         public LagaModelDbContext()
@@ -53,6 +54,15 @@ namespace aPocoModel.Generated
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+        }
+
+        public bool IsSqlParameterNull(SqlParameter param)
+        {
+            var sqlValue = param.SqlValue;
+            var nullableValue = sqlValue as INullable;
+            if (nullableValue != null)
+                return nullableValue.IsNull;
+            return (sqlValue == null || sqlValue == DBNull.Value);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

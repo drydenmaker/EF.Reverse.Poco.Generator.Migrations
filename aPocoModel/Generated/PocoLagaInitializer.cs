@@ -1,6 +1,6 @@
 ﻿namespace aPocoModel.Generated
 {
-    public class PocoLagaInitializer : System.Data.Entity.DropCreateDatabaseAlways<LagaModelDbContext>
+    public class PocoLagaInitializer<T> : System.Data.Entity.DropCreateDatabaseAlways<LagaModelDbContext>
     {
         #region Overrides of DropCreateDatabaseAlways<LagaModel>
 

@@ -22,10 +22,11 @@ using System.Data.SqlTypes;
 using System.Data.Entity.ModelConfiguration;
 using System.Threading;
 using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption;
+using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
-    [GeneratedCodeAttribute("EF.Reverse.POCO.Generator", "2.15.1.0")]
+    [GeneratedCodeAttribute("EF.Reverse.POCO.Generator", "2.15.2.0")]
     public class FakeLagaModelDbContext : ILagaModelDbContext
     {
         public DbSet<LoggerEntry> LoggerEntries { get; set; }

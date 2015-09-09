@@ -22,10 +22,11 @@ using System.Data.SqlTypes;
 using System.Data.Entity.ModelConfiguration;
 using System.Threading;
 using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption;
+using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
-    [GeneratedCodeAttribute("EF.Reverse.POCO.Generator", "2.15.1.0")]
+    [GeneratedCodeAttribute("EF.Reverse.POCO.Generator", "2.15.2.0")]
     public class FakeDbSet<TEntity> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>, IDbAsyncEnumerable<TEntity> 
         where TEntity : class 
     { 
@@ -116,11 +117,11 @@ namespace aPocoModel.Generated
         }
     } 
  
-    internal class FakeDbAsyncQueryProvider<TEntity> : IDbAsyncQueryProvider 
+    public class FakeDbAsyncQueryProvider<TEntity> : IDbAsyncQueryProvider 
     { 
         private readonly IQueryProvider _inner; 
  
-        internal FakeDbAsyncQueryProvider(IQueryProvider inner) 
+        public FakeDbAsyncQueryProvider(IQueryProvider inner) 
         { 
             _inner = inner; 
         } 
@@ -156,7 +157,7 @@ namespace aPocoModel.Generated
         } 
     } 
  
-    internal class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IDbAsyncEnumerable<T>, IQueryable<T> 
+    public class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IDbAsyncEnumerable<T>, IQueryable<T> 
     { 
         public FakeDbAsyncEnumerable(IEnumerable<T> enumerable) 
             : base(enumerable) 
@@ -182,7 +183,7 @@ namespace aPocoModel.Generated
         } 
     } 
  
-    internal class FakeDbAsyncEnumerator<T> : IDbAsyncEnumerator<T> 
+    public class FakeDbAsyncEnumerator<T> : IDbAsyncEnumerator<T> 
     { 
         private readonly IEnumerator<T> _inner; 
  

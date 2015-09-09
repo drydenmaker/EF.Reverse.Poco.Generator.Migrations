@@ -3,7 +3,7 @@
 <#
 fileManager.StartHeader();
 // Copyright (C) Simon Hughes 2012
-// v2.15.1
+// v2.15.2
 #>
 // ReSharper disable RedundantUsingDirective
 // ReSharper disable DoNotCallOverridableMethodsInConstructor
@@ -72,19 +72,11 @@ using <#= PocoConfigurationNamespace #>;
 using System.Threading;
 <# } #>
 <# 	if(	ElementsToGenerate.HasFlag(Elements.PocoConfiguration)){
-        switch (TargetFrameworkVersion)
-        {
-            case "4.0":
-            case "4.5":
-            case "4.51":#>
+        if (IsSupportedFrameworkVersion("4.0")) {#>
 using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption;
-<#              break;
-            default: #>
+<#      } else { #>
 //using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.DatabaseGeneratedOption;
-<#              break;
-        }
-    } 
-#>
+<# } } #>
 <#if (!string.IsNullOrEmpty(MigrationConfigurationFileName)){
 #>using System.Data.Entity.Migrations;
 <#}#>
@@ -239,6 +231,15 @@ foreach(Table tbl in from t in tables.Where(t => !t.IsMapping).OrderBy(x => x.Na
             base.Dispose(disposing);
         }
 
+        public bool IsSqlParameterNull(SqlParameter param)
+        {
+            var sqlValue = param.SqlValue;
+            var nullableValue = sqlValue as INullable;
+            if (nullableValue != null)
+                return nullableValue.IsNull;
+            return (sqlValue == null || sqlValue == DBNull.Value);
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -324,6 +325,7 @@ if (IncludeTableValuedFunctions)
             string spReturnClassName = WriteStoredProcReturnModelName(sp);
 #>
         [DbFunction("<#=DbContextName#>", "<#=sp.Name#>")]
+        [DbFunctionDetails(DatabaseSchema = "<#=sp.Schema#>")]
         public IQueryable<<#= spReturnClassName #>> <#= spExecName #>(<#=WriteStoredProcFunctionParams(sp, false)#>)
         {
 <#= WriteTableValuedFunctionDeclareSqlParameter(sp) #> 
@@ -343,7 +345,7 @@ if (IncludeTableValuedFunctions)
     // Fake Database context
 <# } #>
     <#= CodeGeneratedAttribute #>
-    public class Fake<#=DbContextName #> : I<#=DbContextName #>
+    public <# if(MakeClassesPartial) { #>partial <# } #>class Fake<#=DbContextName #> : I<#=DbContextName #>
     {
 <#
 foreach (Table tbl in from t in tables.Where(t => !t.IsMapping).OrderBy(x => x.NameHumanCase) select t)
@@ -360,7 +362,10 @@ foreach (Table tbl in from t in tables.Where(t => !t.IsMapping).OrderBy(x => x.N
 #>
             <#=Inflector.MakePlural(tbl.NameHumanCase) #> = new FakeDbSet<<#=tbl.NameHumanCase #>>();
 <# } #>
-        }
+<#if(MakeClassesPartial) {#>
+
+            InitializePartial();
+<#}#>        }
         
         public int SaveChangesCount { get; private set; } 
         public int SaveChanges()
@@ -380,6 +385,10 @@ foreach (Table tbl in from t in tables.Where(t => !t.IsMapping).OrderBy(x => x.N
             throw new NotImplementedException();
         }
 <# } #>
+<#if(MakeClassesPartial) {#>
+
+        partial void InitializePartial();
+<#}#>
 
         protected virtual void Dispose(bool disposing)
         {
@@ -554,11 +563,11 @@ if (IncludeTableValuedFunctions)
         }
     } 
  
-    internal class FakeDbAsyncQueryProvider<TEntity> : IDbAsyncQueryProvider 
+    public class FakeDbAsyncQueryProvider<TEntity> : IDbAsyncQueryProvider 
     { 
         private readonly IQueryProvider _inner; 
  
-        internal FakeDbAsyncQueryProvider(IQueryProvider inner) 
+        public FakeDbAsyncQueryProvider(IQueryProvider inner) 
         { 
             _inner = inner; 
         } 
@@ -594,7 +603,7 @@ if (IncludeTableValuedFunctions)
         } 
     } 
  
-    internal class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IDbAsyncEnumerable<T>, IQueryable<T> 
+    public class FakeDbAsyncEnumerable<T> : EnumerableQuery<T>, IDbAsyncEnumerable<T>, IQueryable<T> 
     { 
         public FakeDbAsyncEnumerable(IEnumerable<T> enumerable) 
             : base(enumerable) 
@@ -620,7 +629,7 @@ if (IncludeTableValuedFunctions)
         } 
     } 
  
-    internal class FakeDbAsyncEnumerator<T> : IDbAsyncEnumerator<T> 
+    public class FakeDbAsyncEnumerator<T> : IDbAsyncEnumerator<T> 
     { 
         private readonly IEnumerator<T> _inner; 
  
@@ -755,7 +764,7 @@ foreach(Table tbl in tables.Where(t => !t.IsMapping).OrderBy(x => x.NameHumanCas
 <# fileManager.StartNewFile(tbl.NameHumanCase + ConfigurationClassName + FileExtension); #>
 <#if(IncludeComments){#>    // <#=tbl.Name#>
 <# } #>
-    internal <# if(MakeClassesPartial) { #>partial <# } #>class <#=tbl.NameHumanCase + ConfigurationClassName#> : EntityTypeConfiguration<<#=tbl.NameHumanCase#>>
+    public <# if(MakeClassesPartial) { #>partial <# } #>class <#=tbl.NameHumanCase + ConfigurationClassName#> : EntityTypeConfiguration<<#=tbl.NameHumanCase#>>
     {
         public <#=tbl.NameHumanCase + ConfigurationClassName#>()
             : this(<# if (string.IsNullOrEmpty(tbl.Schema)) { #>""<# } else { #>"<#=tbl.Schema#>"<# } #>)

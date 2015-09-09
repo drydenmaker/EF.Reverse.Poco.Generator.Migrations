@@ -22,11 +22,12 @@ using System.Data.SqlTypes;
 using System.Data.Entity.ModelConfiguration;
 using System.Threading;
 using DatabaseGeneratedOption = System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption;
+using System.Data.Entity.Migrations;
 
 namespace aPocoModel.Generated
 {
     // logger_thread_statuses
-    internal class LoggerThreadStatusConfiguration : EntityTypeConfiguration<LoggerThreadStatus>
+    public class LoggerThreadStatusConfiguration : EntityTypeConfiguration<LoggerThreadStatus>
     {
         public LoggerThreadStatusConfiguration()
             : this("dbo")
